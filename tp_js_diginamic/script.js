@@ -16,7 +16,7 @@ function init(){
 
     alert("Bienvenu dans votre bibliothèque !!!")
     while(!finito){
-        choice(finito);
+        finito = choice(finito);
     }
 
 
@@ -46,7 +46,7 @@ function choice(finito) {
             break;
 
         case "5":
-            finito = true;
+            finito = true;           
             break;
 
         default:
