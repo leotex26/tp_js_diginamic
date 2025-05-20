@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ajouter un livre</title>
+<script type="module" src="./js/formBook.js"></script>
+
+</head>
+<body>
+
+  <h1>Ajouter un livre</h1>
+
+<form id="formAjoutLivre">
+  <input type="text" id="titre" placeholder="Titre" required />
+  <input type="text" id="auteur" placeholder="Auteur" required />
+  <input type="number" id="annee" placeholder="Année" required />
+  <select id="typeLivre">
+    <option value="numerique">Numérique</option>
+    <option value="papier">Papier</option>
+  </select>
+  <input type="number" id="tailleFichier" placeholder="Taille du fichier (Mo)" />
+  <input type="number" id="nombrePages" placeholder="Nombre de pages" />
+  <button type="submit">Ajouter le livre</button>
+</form>
+
+<ul id="listeLivres"></ul>
+
+
+
+
+</body>
+</html>
