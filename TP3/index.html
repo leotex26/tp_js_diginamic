@@ -2,27 +2,31 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Bibliothèque</title>
-<script type="module" src="js/index.js"></script>
-  <style>
-    #book-list {
-      margin-top: 20px;
-    }
-  </style>
+  <title>Page d'accueil</title>
+  <script type="module" src="./js/index.js"></script>
 </head>
 <body>
+  <h1>Bienvenue !</h1>
 
-  <h1>Gestion des livres</h1>
+  <label for="membre-select">Choisissez un membre :</label>
+  <select id="membre-select">
+    <option value="Blob">Blob</option>
+    <option value="Cunegonde">Cunégonde</option>
+    <option value="Test">Test</option>
+    <option value="__nouveau__">➕ Nouveau membre</option>
+  </select>
 
-  <button onclick="window.location.href='formulaire.html'">Ajouter un livre</button>
-  <button id="afficher-btn">Afficher tous les livres</button>
-  <button onclick="window.location.href='recherche.html'">Rechercher un livre</button>
+  <label for="biblio-select">Choisissez un bibliothécaire :</label>
+  <select id="biblio-select">
+    <option value="OIM">OIM</option>
+    <option value="Janine">Janine</option>
+  </select>
+
+  <button id="valider">Entrer</button>
+
+  <input type="text" id="nouveau-membre" placeholder="Entrez le nom du nouveau membre" style="display:none;" />
+
   
-
-  <div id="book-list"></div>
-
-
-
-
 </body>
 </html>
+

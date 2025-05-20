@@ -13,11 +13,38 @@ const admin = new Bibliothecaire("OIM");
 window.addEventListener("DOMContentLoaded", () => {
 
     const formulaire = document.getElementById("formAjoutLivre");
+
     
 
     if (formulaire) {
         
-        console.log("formulaire détécté");
+
+        const select = document.getElementById("typeLivre");
+        const inputNum = document.getElementById("tailleFichier");
+        const inputPhysic = document.getElementById("nombrePages");
+
+
+        inputPhysic.style.display = "none";
+        inputNum.style.display = "block";
+
+        // TO DO pas super propre ^^^^^^
+
+        select.addEventListener("change", event => {
+
+            console.log(select.value); // Console : papier ou numerique
+            
+            if(select.value == "papier"){
+                console.log("test"); // n'apparait pas dans la console
+                inputNum.style.display = "none";
+                inputPhysic.style.display = "block";
+            }
+            else if(select.value == "numerique"){
+                inputPhysic.style.display = "none";
+                inputNum.style.display = "block";
+            }
+
+        })
+
         formulaire.addEventListener("submit", e => {
             console.log("formulaire envoyé");
           e.preventDefault();
