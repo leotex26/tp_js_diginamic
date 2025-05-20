@@ -1,49 +1,77 @@
-// Charger les membres existants depuis localStorage (ou en dur)
 const membresParDefaut = ["Blob", "Alice"];
-let membres = JSON.parse(localStorage.getItem("membres")) || membresParDefaut;
 
-const selectMembre = document.getElementById("membre-select");
-const inputNouveau = document.getElementById("nouveau-membre");
 
-membres.forEach(nom => {
-  const option = document.createElement("option");
-  option.value = nom;
-  option.textContent = nom;
-  selectMembre.insertBefore(option, selectMembre.lastElementChild); 
+const membres = JSON.parse(localStorage.getItem("membres")) || ["Blob"];
+const biblios = JSON.parse(localStorage.getItem("bibliothecaires")) || ["OIM"];
+
+const membreSelect = document.getElementById("membre-select");
+const biblioSelect = document.getElementById("biblio-select");
+const inputNouveauMembre = document.getElementById("nouveau-membre");
+const inputNouveauBiblio = document.getElementById("nouveau-biblio");
+
+// Injecter les options
+function remplirSelect(select, liste, dernierOption) {
+  liste.forEach(nom => {
+    const option = document.createElement("option");
+    option.value = nom;
+    option.textContent = nom;
+    select.insertBefore(option, dernierOption);
+  });
+}
+
+remplirSelect(membreSelect, membres, membreSelect.lastElementChild);
+remplirSelect(biblioSelect, biblios, biblioSelect.lastElementChild);
+
+// Affichage des champs "nouveau"
+membreSelect.addEventListener("change", () => {
+  inputNouveauMembre.style.display = membreSelect.value === "__nouveau__" ? "block" : "none";
 });
 
-
-selectMembre.addEventListener("change", () => {
-  if (selectMembre.value === "__nouveau__") {
-    inputNouveau.style.display = "block";
-  } else {
-    inputNouveau.style.display = "none";
-  }
+biblioSelect.addEventListener("change", () => {
+  inputNouveauBiblio.style.display = biblioSelect.value === "__nouveau__" ? "block" : "none";
 });
 
 document.getElementById("valider").addEventListener("click", () => {
-  let membre;
+  let membre = membreSelect.value;
+  let biblio = biblioSelect.value;
 
-  if (selectMembre.value === "__nouveau__") {
-    const nom = inputNouveau.value.trim();
-    if (!nom) {
-      alert("Veuillez entrer un nom.");
-      return;
-    }
+  if (membre && biblio) {
+    alert("Veuillez choisir soit un membre soit un bibliothécaire, pas les deux.");
+    membreSelect.value = "";
+    biblioSelect.value = "";
+    return;
+  }
+
+  if (!membre && !biblio) {
+    alert("Veuillez choisir un utilisateur.");
+    membreSelect.value = "";
+    biblioSelect.value = "";
+    return;
+  }
+
+  if (membre === "__nouveau__") {
+    const nom = inputNouveauMembre.value.trim();
+    if (!nom) return alert("Entrez un nom pour le membre.");
     membre = nom;
-
-    // Ajouter et sauvegarder si le nom n'existe pas déjà
     if (!membres.includes(nom)) {
       membres.push(nom);
       localStorage.setItem("membres", JSON.stringify(membres));
     }
-
-  } else {
-    membre = selectMembre.value;
   }
 
-  const biblio = document.getElementById("biblio-select").value;
+  if (biblio === "__nouveau__") {
+    const nom = inputNouveauBiblio.value.trim();
+    if (!nom) return alert("Entrez un nom pour le bibliothécaire.");
+    biblio = nom;
+    if (!biblios.includes(nom)) {
+      biblios.push(nom);
+      localStorage.setItem("bibliothecaires", JSON.stringify(biblios));
+    }
+  }
 
-  // Redirige vers index avec le membre sélectionné
-  window.location.href = `accueil.html?membre=${membre}&biblio=${biblio}`;
+  const userType = membre ? "membre" : "biblio";
+  const nom = membre || biblio;
+
+  // Redirection avec infos dans l’URL
+  window.location.href = `accueil.html?type=${userType}&nom=${encodeURIComponent(nom)}`;
 });
